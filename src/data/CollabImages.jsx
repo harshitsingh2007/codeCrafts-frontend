@@ -1,0 +1,43 @@
+const collabImages = [
+    {
+     Image:'https://framerusercontent.com/images/QmTOLjwbSVrmr8WrdLdpQ39fvc.webp',
+    },
+    {
+     Image:"https://framerusercontent.com/images/Un9rlUpop5JTuH46ikGBAx09JYA.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/2h64IfvU2JIPLDVupnkOHhP6B80.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/tdCVxkBtUsBu3WrEt2bCL4bKwo.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/v3aE0EqqtH32yDHiTN9onYOl5Mw.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/YumhrVDUnAcRhW1CUhdVyGDLoIk.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/Acq8EqDR37aVSCapqoMbpPph4E.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/091HgJfFbnzHx86knuskTGY.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/ij4x4pTR8UgHHf0hRRIOXePds.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/L1w43xkxN904oGotUWcdtKro.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/i7d2jawOV4smwZc8RWnE4JK5vmY.webp"
+    },
+    {
+    Image:"https://framerusercontent.com/images/5EHFvEfkpj25CkyDUt8irmJF4.webp"
+    },
+    {
+     Image:"https://framerusercontent.com/images/UvEPUHjpWN945bVwHHYbcIABEM8.webp"
+    },
+
+]
+export default collabImages;

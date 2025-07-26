@@ -1,0 +1,196 @@
+
+.headerMain {
+  background-color: black;
+  color: white;
+  padding-bottom: 5.5em;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.headerMain.open {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.headerMain.closed {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  padding-bottom: 0;
+}
+
+.contactUs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4em;
+}
+
+.contactUs p {
+  font-size: 25px;
+}
+
+.crossToggle1 {
+  background-color: black;
+  border: none;
+}
+
+.crossToggle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.crossToggle::before,
+.crossToggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+}
+
+.crossToggle::before {
+  transform: rotate(45deg);
+}
+
+.crossToggle::after {
+  transform: rotate(-45deg);
+}
+
+.gridCard h1 {
+  font-size: 3em;
+  margin-left: 1em;
+  text-decoration: none;
+}
+.cardLink{
+  text-decoration: none;
+  color: white;
+}
+.gridCard:hover {
+  transition: all 0.1s ease-in-out;
+  background-color: #171717;
+}
+
+.gridContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gridCard {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 3.5em;
+  border: 0.5px solid #171717;
+}
+
+.followUs {
+  margin-top: 3em;
+  font-size: 20px;
+  margin-left: 4em;
+}
+
+/* Contact Form Styles */
+.contactUSForm {
+  border-radius: 50px;
+}
+
+.contactUsFormItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 4em;
+  background-color: white;
+  color: black;
+}
+
+.contactUsFormItem p {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.toggle {
+  background-color: black;
+  width: 25px;
+  height: 3px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.toggleButton {
+  border: none;
+  background-color: white;
+}
+
+.contactUsFormItem2 {
+  padding: 4em;
+}
+
+.contactUsFormItem2 p {
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.contactUsFormItem2 h1 {
+  font-size: 4.5em;
+}
+
+.contactUsFormItem2 h4 {
+  color: #525252;
+  font-weight: lighter;
+  margin-top: 0.8em;
+}
+
+.contactUsFormItem3 {
+  display: flex;
+  padding: 4em;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form input {
+  width: 600px;
+  height: 50px;
+  border: 1px solid #e5e5e5;
+  padding: 2.5em;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.form input:first-child {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.form input:last-child {
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+#contactUsFormItem31 p {
+  font-size: 18px;
+  font-weight: bolder;
+  margin-bottom: 1em;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .gridCard {
+    width: 100%;
+  }
+
+  .contactUsFormItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 1em;
+  }
+}

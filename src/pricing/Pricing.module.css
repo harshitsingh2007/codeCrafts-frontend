@@ -1,0 +1,146 @@
+.pricingContainer{
+    padding-top: 2.1875vw;
+    padding-right: 2.34375vw;
+    padding-left: 2.34375vw;
+    padding-bottom: 1.5625vw;
+}
+/* pricing box1 */
+.pricingBox1 p{
+font-size: 1em;
+padding: 10px;
+text-align: center;
+font-weight: 600;
+background-color:#C7D1FF;
+border-radius: 10px;
+}
+/* pricion box 1 */
+
+/* pricing box 2 */
+.pricingBox2{
+    margin-top: 1.5em;
+    padding: 2em;
+    background-color: #E2EFFF;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #101585;
+}
+.pricingBox2 h1{
+    font-weight: 400;
+    font-size: 4em;
+    letter-spacing: 1px;
+}
+.pricingBox2 p{
+    margin-top: 0.5em;
+    font-size: 18px;
+}
+.pricingBox2 button{
+    margin-top: 1em;
+    padding: 0.8em 2em;
+    border-radius: 30px;
+    border: none;
+    background-color: #101585;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+.pricingBox2 button::after{
+    content: '→';
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+}
+.pricingBox2 button:hover::after{
+    transform: translateX(0.3rem);
+}
+/* pricing box 2 */
+
+
+/* pricing box 3 */
+.pricingBox3{
+    padding-top: 8em;
+}
+.pricingBox3Child{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pricingBox3Child p{
+    max-width: 600px;
+    font-size: 3.5em;
+    margin-bottom: 0.5em;
+    line-height: 65px;
+}
+.pricingBox3Child button{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.8em 0.8em;
+    width: 200px;
+    font-size: 20px;
+    border-radius: 30px;
+}
+.pricingBox3Child2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    padding-top: 4em;
+    padding-bottom: 4em;
+}
+.gridChild{
+    background-color: #D1F0B1;
+    padding: 1.5em;
+    border-radius: 25px;
+}
+.gridChild h3{
+    font-size: 2em;
+    margin-bottom: 50px;
+}
+/* pricing box 3 */
+
+/* pricong box 4 */
+.pricingBox4{
+    padding:3em 3em 10em 3em;
+    
+}
+.pricingBox4Child2{
+    padding-top: 4em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.pricingBox4Child2 div{
+    padding-top: 1.5em;
+    border-top: 1px solid black;
+    width: 350px;
+}
+.pricingBox4Child2 div p{
+    font-size: 14px;
+    max-width: 260px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+ .pricingBox4Child2 div button {
+  border: none;
+  background-color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-bottom: 4px solid black;
+}
+
+.pricingBox4Child2 div button::after {
+  content: '→';
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.pricingBox4Child2 div button:hover::after {
+  transform: translateX(0.5rem); 
+}
+/* pricing box 4 */
+
+
