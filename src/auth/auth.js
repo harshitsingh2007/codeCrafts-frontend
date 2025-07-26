@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import axios from 'axios'
-const API_URL="http://localhost:4000/api/auth"
+const API_URL = "https://codecrafts-backend.onrender.com/api/auth";
 export const userAuthStore= create((set)=>({
     isLoading:false,
     isauth:false,

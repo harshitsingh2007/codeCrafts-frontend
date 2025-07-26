@@ -6,16 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Form() {
-    const Navigate=useNavigate()
+    const Navigate = useNavigate()
     const [visible, setVisible] = useState(false)
 
-    const [data,setdata]=useState({
+    
+    const API_URL ="https://codecrafts-backend.onrender.com";
+
+    const [data, setdata] = useState({
         email: "",
         password: "",
-     })
+    })
 
-    const getVaue=(e)=>{
-        const {name,value}=e.target; 
+    const getVaue = (e) => {
+        const { name, value } = e.target;
         setdata({
             ...data,
             [name]: value
@@ -25,7 +28,12 @@ export default function Form() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4000/api/auth/signup", data);
+            const response = await axios.post(`${API_URL}/api/auth/signup`, data, {
+                withCredentials: true, // Important for cookies/sessions
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             console.log(response.data);
             localStorage.setItem("udata", JSON.stringify(data));
             setdata({
@@ -33,10 +41,9 @@ export default function Form() {
             });
             Navigate("/");
         } catch (error) {
-            console.log(error.message);
+            console.error("Signup error:", error.response?.data || error.message);
         }
     }
-
     return (
         <div className='p-7 flex justify-center'>
             <div className='bg-white rounded-xl text-black w-[450px] h-[500px] py-4 px-4'>
