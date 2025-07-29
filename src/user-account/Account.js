@@ -5,7 +5,7 @@ import axios from 'axios'
 export default function Account() {
 const Navigate=useNavigate()
 
-const API_URL = 'http://localhost:4000';
+const API_URL = 'https://codecrafts-backend.onrender.com';
 
 const logout = async () => {
   try {

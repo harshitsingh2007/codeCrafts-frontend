@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function FormLogin() {
   const Navigate = useNavigate()
 
-const API_URL = "http://localhost:4000";
+const API_URL = "https://codecrafts-backend.onrender.com";
 const [data, setdata] = useState({
         email: "",
         password: ""

@@ -10,7 +10,7 @@ export default function Form() {
     const [visible, setVisible] = useState(false)
 
     
-    const API_URL ="http://localhost:4000";
+    const API_URL ="https://codecrafts-backend.onrender.com";
 
     const [data, setdata] = useState({
         email: "",
