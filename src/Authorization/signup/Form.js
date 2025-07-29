@@ -10,7 +10,7 @@ export default function Form() {
     const [visible, setVisible] = useState(false)
 
     
-    const API_URL ="https://codecrafts-backend.onrender.com";
+    const API_URL ="http://localhost:4000";
 
     const [data, setdata] = useState({
         email: "",
@@ -29,13 +29,12 @@ export default function Form() {
         e.preventDefault();
         try {
             const response = await axios.post(`${API_URL}/api/auth/signup`, data, {
-                withCredentials: true, // Important for cookies/sessions
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             console.log(response.data);
-            localStorage.setItem("udata", JSON.stringify(data));
             setdata({
                 email: "", password: ""
             });

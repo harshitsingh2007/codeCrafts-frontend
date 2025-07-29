@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { FaSearch } from "react-icons/fa";
-import codeCrafts from '../../codecrafts.png'
+import codeCrafts from '../../images/codecrafts.png'
 
 export default function NavbarNew() {
   const [isOnline, setOnline] = useState(navigator.onLine);

@@ -1,8 +1,47 @@
-import React from 'react'
+import axios from 'axios'
+import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
 export default function FormLogin() {
   const Navigate = useNavigate()
+
+const API_URL = "http://localhost:4000";
+const [data, setdata] = useState({
+        email: "",
+        password: ""
+    })
+
+    const getValue = (e) => {
+        const { name, value } = e.target;
+        setdata({
+            ...data,
+            [name]: value
+        })
+    }
+
+const handleLogin= async(e)=>{
+        console.log("login")
+        e.preventDefault();
+        try {
+        const response = await axios.post(`${API_URL}/api/auth/login`, data, {
+        withCredentials: true,
+          headers: {
+        'Content-Type': 'application/json',
+        },
+        });
+
+        console.log(response.data);
+        setdata({
+                email:"",
+                password:"",
+        })
+        Navigate("/")
+                
+        } catch (error) {
+                console.error("Login error:", error.response?.data || error.message);
+        }
+}
+
 return (
  <div className='mb-0 mt-3 flex justify-center'>
                      <div className='bg-white rounded-xl text-black w-[450px] h-[460px] py-4 px-4'>
@@ -15,15 +54,15 @@ return (
                                      <span className="px-3 text-sm text-gray-500">OR</span>
                                      <div className="flex-1 h-px bg-gray-300"></div>
                              </div>
-            <form action="">
+            <form action="" method='POST' onSubmit={handleLogin} >
                      <div className='flex flex-col gap-3'>
                                 <div className='flex flex-col gap-2'>
                                         <label htmlFor="">Email</label>
-                                        <input type="email" placeholder='Enter your email' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
+                                        <input type="email" name='email' onChange={getValue} placeholder='Enter your email' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
                                 </div>
                                 <div className='flex flex-col gap-2'>
                                         <label htmlFor="">Password</label>
-                                        <input type="password" placeholder='Enter your password' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
+                                        <input type="password" name='password' onChange={getValue} placeholder='Enter your password' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
                                 </div>
                      <button className='bg-black py-2 text-white rounded-lg '>Contine with Email</button>
                      </div>

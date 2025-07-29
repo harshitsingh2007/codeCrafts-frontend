@@ -1,16 +1,28 @@
-import { useEffect, useState } from 'react'
 import styles from './Account.module.css'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 export default function Account() {
 const Navigate=useNavigate()
 
-function logout(){
-  localStorage.removeItem("udata");
-  toast.success("Logout Successfully")
-  Navigate('/')
+const API_URL = 'http://localhost:4000';
+
+const logout = async () => {
+  try {
+    const res = await axios.post(`${API_URL}/api/auth/logout`, {}, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log(res.data);
+    Navigate('/login');
+  } catch (error) {
+    console.log(error.message, "logout error");
+    toast.error("Logout failed. Please try again.");
+  }
 }
- 
+
 return (
     <>
       <ToastContainer />

@@ -19,32 +19,17 @@ export function TemplateMain() {
 
       <div>
         <h1 className='mb-4 text-[2em] gt-super-font'>Popular Logo</h1>
-        <div className='flex overflow-x-auto scrollbar-hide whitespace-nowrap'>
+        <div>
           {LogoData.map((logo,index)=>{
             return(
-               <div className='flex-shrink-0  flex flex-col gap-3 mr-5'>
-               <img key={index} src={logo.Image} alt="" className='w-[350px] rounded-3xl' />
-               <h4 className='text-[18px] ml-4'>{logo.title}</h4>
+               <div>
+              <img key={index} src={logo.Image} alt="" className='w-[350px] rounded-3xl mb-4' />
+              <h4 className='text-[18px] ml-4'>{logo.title}</h4>
                </div>
-               )
+            )
           })}
         </div>
       </div>
-      
-            <div>
-        <h1 className='mb-4 text-[2em] gt-super-font'>User Choices</h1>
-        <div className='flex overflow-x-auto scrollbar-hide whitespace-nowrap'>
-          {LogoData.map((logo,index)=>{
-            return(
-               <div className='flex-shrink-0  flex flex-col gap-3 mr-5'>
-               <img key={index} src={logo.Image} alt="" className='w-[350px] rounded-3xl' />
-               <h4 className='text-[18px] ml-4'>{logo.title}</h4>
-               </div>
-               )
-          })}
-        </div>
-      </div>
-       
     </div>  
     </div>
   )

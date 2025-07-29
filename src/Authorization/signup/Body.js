@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import codecraft from "../codecrafts.png";
+import codecraft from "../../images/codecrafts.png";
 function Body() {
     const Navigate=useNavigate()
     const path = window.location.pathname;
