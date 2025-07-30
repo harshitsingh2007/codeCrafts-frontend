@@ -15,9 +15,12 @@ export default function VerifyEmai() {
     const handleVerifyEmail = async (e) => {
         e.preventDefault();
         try {
-            await verifyEmail(code);
+         const res= await verifyEmail(code);
+          if (res.success) {
+            alert("Email verified successfully");
             console.log("Email verified successfully");
             Navigate('/')
+          }
         } catch (error) {
             console.error("Verification error:", error.response?.data || error.message);
         }
