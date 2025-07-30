@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { MainPage } from './MainPage/MainPage';
 import { SignUp } from './Authorization/signup/SignUp.js';
 import { LoginPage } from './Authorization/login/LoginPage.js';
+import VerifyEmail from './Authorization/VerifyEmail/VerifyEmail.js';
 import { DesignMain } from './Design/DesignMain';
 import {TemplateMain}  from './Template/TemplateMain';
 import AboutUs from './About-us/AboutUs';
@@ -25,7 +26,7 @@ const Navigate=useNavigate();
   const data = localStorage.getItem('udata');
   const location = useLocation();
  const { isauth, user } = userAuthStore()
-  const excludeNavFooter = ['/signup', '/login', '/loader', '*','/contact'];
+  const excludeNavFooter = ['/signup', '/login', '/loader', '*','/contact','/verify-email'];
   const shouldShowNavFooter = !excludeNavFooter.includes(location.pathname);
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const Navigate=useNavigate();
           <Route path="/admin/MainPage" element={<MainPageAdmin />} />
          <Route path="*" element={<Error />} />
           <Route path="/services" element={<OurServices />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
         </Routes>
         
         {shouldShowNavFooter && <Footer />}

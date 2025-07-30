@@ -24,7 +24,6 @@ export const userAuthStore = create((set) => ({
             set({
                 isLoading: false,
                 error: error.response?.data?.message || error.message,
-                isauth: false
             });
             console.log(error.response);
         }
@@ -45,7 +44,6 @@ export const userAuthStore = create((set) => ({
             set({
                 isLoading: false,
                 error: error.response?.data?.message || error.message,
-                isauth: false
             });
             console.log(error.message);
         }
@@ -70,5 +68,41 @@ export const userAuthStore = create((set) => ({
             console.log(error.message);
         }
     },
-
+    forgotPassword:async(email)=>{
+        set({ isLoading: true });
+        try {
+            const res = await axios.post(`${API_URL}/forgot-password`, { email });
+            console.log(res.data);
+            set({
+                isLoading: false,
+                message: res.data.message || "Password reset link sent",
+                error: null
+            });
+        } catch (error) {
+            set({
+                isLoading: false,
+                error: error.response?.data?.message || error.message,
+            });
+            console.log(error.message);
+        }
+    },
+    verifyEmail:async (code)=>{
+        set({ isLoading: true });
+        try {
+            const res = await axios.post(`${API_URL}/verify-email`, { code });
+            console.log(res.data);
+            set({
+                isLoading: false,
+                message: res.data.message || "Email verified successfully",
+                error: null
+            });
+        } catch (error) {
+            set({
+                isLoading: false,
+                error: error.response?.data?.message || error.message,
+            });
+            console.log(error.message);
+        }
+    }
+    
 }));

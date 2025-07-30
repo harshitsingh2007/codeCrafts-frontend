@@ -2,13 +2,16 @@ import axios from 'axios'
 import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
+import { RiLoader2Fill } from "react-icons/ri";
+import { userAuthStore } from '../../auth/auth.js'
 export default function FormLogin() {
   const Navigate = useNavigate()
+  const {isLoading,login}=userAuthStore()
 
 const API_URL = "https://codecrafts-backend.onrender.com";
 const [data, setdata] = useState({
         email: "",
-        password: ""
+        password: "",
     })
 
     const getValue = (e) => {
@@ -20,7 +23,6 @@ const [data, setdata] = useState({
     }
 
 const handleLogin= async(e)=>{
-        console.log("login")
         e.preventDefault();
         try {
         const response = await axios.post(`${API_URL}/api/auth/login`, data, {
@@ -64,7 +66,7 @@ return (
                                         <label htmlFor="">Password</label>
                                         <input type="password" name='password' onChange={getValue} placeholder='Enter your password' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
                                 </div>
-                     <button className='bg-black py-2 text-white rounded-lg '>Contine with Email</button>
+                     <button className='bg-black py-2 text-white rounded-lg '>{isLoading?<RiLoader2Fill className='animate-spin'/>:"Contine with Email"}</button>
                      </div>
 
                      <div className='flex flex-col items-center justify-center mt-3 gap-1'>

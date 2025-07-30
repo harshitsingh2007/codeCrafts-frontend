@@ -3,9 +3,12 @@ import { MdOutlineVisibility } from "react-icons/md";
 import { MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
+import { RiLoader2Fill } from "react-icons/ri";
 import axios from 'axios';
+import { userAuthStore } from '../../auth/auth.js';
 
 export default function Form() {
+    const {isloading}=userAuthStore();
     const Navigate = useNavigate()
     const [visible, setVisible] = useState(false)
 
@@ -38,10 +41,10 @@ export default function Form() {
             setdata({
                 email: "", password: ""
             });
-            Navigate("/");
         } catch (error) {
             console.error("Signup error:", error.response?.data || error.message);
         }
+       Navigate('/verify-email')
     }
     return (
         <div className='p-7 flex justify-center'>
@@ -88,7 +91,7 @@ export default function Form() {
                             <label htmlFor="" className='ml-2'>I want to receive updates and special offers</label>
                         </div>
                     </div>
-                    <button className='bg-black py-2 px-4 text-white rounded-lg'>Sign Up</button>
+                    <button className='bg-black py-2 px-4 text-white rounded-lg'>{isloading?<RiLoader2Fill className='animate-spin'/>:"Sign Up"}</button>
                 </form>
             </div>
         </div>
