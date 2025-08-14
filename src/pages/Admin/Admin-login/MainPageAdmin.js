@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 
 export default function MainPageAdmin() {
   const navigate = useNavigate();
-
   return (
     <>
       <div className='bg-black text-white '>
@@ -12,7 +11,7 @@ export default function MainPageAdmin() {
             <div className='flex flex-col items-center justify-center text-center pt-[6em] pb-[8em]'>
               <h1 className='text-[3.75em] font-medium text-white'>An <span className='text-orange-500'>engineer</span> in every tab</h1>
               <p className='text-[#adadad] text-[20px] w-[670px]'>Delegate software development tasks to agents called Droids. Droids take commands and deliver: pull requests, tickets, docs, and more.</p>
-              <button className='bg-gradient-to-b from-[#FFA04E] to-[#FF7822] py-2 text-[18px] px-4 font-[Geist,sans-serif] font-bold rounded-md'>Start Building</button>
+              <button onClick={()=>navigate('/signup')} className='bg-gradient-to-b from-[#FFA04E] to-[#FF7822] py-2 text-[18px] px-4 font-[Geist,sans-serif] font-bold rounded-md'>Start Building</button>
             </div>
 
             <div>
@@ -26,7 +25,7 @@ export default function MainPageAdmin() {
     <div className='flex flex-col justify-center items-start'>
     <p className='text-[3.5em] font-bold'>Your Listing</p>
     <p className='text-[1.5em]'>Create a listing and share your skills with the world</p>
-    <button onClick={()=>navigate('/')}  className='bg-white text-black py-2 px-4 rounded '>Create Listing</button>
+    <button onClick={()=>navigate('/signup')}  className='bg-white text-black py-2 px-4 rounded '>Create Listing</button>
     </div>
   <div><img src="https://framerusercontent.com/images/y4bHNhBcpNBQB1W1uaLSo3s6rRc.webp" alt=""  className='h-[300px] border-b-2 border-[#121212] rounded-2xl'/></div>
 </div>
@@ -39,7 +38,7 @@ export default function MainPageAdmin() {
     <p className='text-[1em] font-bold'>Earn from your own skills</p>
     </div>
     <div className='mt-[1.5em]'>
-    <button onClick={()=>navigate('/')} className='bg-white text-black py-2 px-4 rounded'>Start Freelancing</button>
+    <button onClick={()=>navigate('/signup')} className='bg-white text-black py-2 px-4 rounded'>Start Freelancing</button>
     </div>
 </div>
 </div>
@@ -48,9 +47,8 @@ export default function MainPageAdmin() {
 <div className='text-center mt-[4em] pb-[6em]'>
   <h1 className='mb-[0px] text-[3.5em]'>Ready to build</h1>
   <h1 className='mb-0 text-[3.5em] text-[#D8841A]'>the software of the future?</h1>
-    <button className='bg-white text-black py-2 px-4 rounded mt-[1em] hover:shadow-[0_0px_10px_10px_white]' onClick={()=>navigate('/listing')}>Start Building</button>
+    <button className='bg-white text-black py-2 px-4 rounded mt-[1em] hover:shadow-[0_0px_10px_10px_white]' onClick={()=>navigate('/signup')}>Start Building</button>
 </div>
-
 </div>
 </div>
     </>

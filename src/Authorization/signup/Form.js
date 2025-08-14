@@ -4,20 +4,18 @@ import { MdOutlineVisibilityOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { RiLoader2Fill } from "react-icons/ri";
-import axios from 'axios';
-import { userAuthStore } from '../../auth/auth.js';
+import { userAuthStore } from '../../store/auth/auth.js';
 
 export default function Form() {
-    const {isloading}=userAuthStore();
+    const {isloading,signup}=userAuthStore();
     const Navigate = useNavigate()
     const [visible, setVisible] = useState(false)
 
-    
-    const API_URL ="https://codecrafts-backend.onrender.com";
-
     const [data, setdata] = useState({
+        name:"",
         email: "",
         password: "",
+        Identity:"",
     })
 
     const getVaue = (e) => {
@@ -28,27 +26,30 @@ export default function Form() {
         })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(`${API_URL}/api/auth/signup`, data, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const result = await signup(data.email, data.password,data.name,data.Identity);
+        if (result?.success) {
+            setdata({ 
+                email: "",
+                password: "",
+                name:"",
+                Identity:"", 
             });
-            console.log(response.data);
-            setdata({
-                email: "", password: ""
-            });
-        } catch (error) {
-            console.error("Signup error:", error.response?.data || error.message);
+         Navigate('/');
+        } else {
+            alert(result?.message || "Signup failed. Please try again.");
         }
-       Navigate('/verify-email')
+
+    } catch (error) {
+        console.error("Signup error:", error);
+        alert(error.message || "An unexpected error occurred");
     }
+}
     return (
         <div className='p-7 flex justify-center'>
-            <div className='bg-white rounded-xl text-black w-[450px] h-[500px] py-4 px-4'>
+            <div className='bg-white rounded-xl text-black w-[450px] h-[700px] py-4 px-4'>
                 <button className='bg-black flex items-center text-center gap-3 text-[20px] py-2 px-5 w-full rounded-lg'>
                     <FcGoogle size={30} />
                     <span className='text-white'>Sign Up with Google</span>
@@ -60,26 +61,35 @@ export default function Form() {
                 </div>
                 <form onSubmit={handleSubmit} method='POST' className='flex flex-col gap-4'>
                     <div className='flex flex-col gap-2'>
+                        <label htmlFor="">Name</label>
+                        <input type="text" name='name' onChange={getVaue} value={data.name} placeholder='Enter your name' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
+                    </div>
+                  
+                    <div className='flex flex-col gap-2'>
                         <label htmlFor="">Email</label>
                         <input type="email" name='email' onChange={getVaue} value={data.email} placeholder='Enter your email' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
                     </div>
-                    <div className='flex flex-col gap-2'>
-                    <label htmlFor="">Password</label>
-                    <div className='flex w-full items-center justify-between border border-black rounded-lg px-2 shadow-md max-w-md mx-auto'>
-                        <input name='password' onChange={getVaue} value={data.password}
-                            type={visible ? "text" : "password"}
-                            placeholder='Enter your password'
-                            required
-                            className='w-full py-2 px-2 outline-none border-none bg-transparent'
-                            />
-                        <button
-                            type="button"
-                            onClick={() => setVisible(!visible)}
-                            className='text-2xl text-gray-600 hover:text-black cursor-pointer'
-                            >
-                            {visible ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff />}
-                        </button>
-                    </div>
+                <div className='flex flex-col gap-2'>
+                <label htmlFor="">Password</label>
+                <div className='flex w-full items-center justify-between border border-black rounded-lg px-2 shadow-md max-w-md mx-auto'>
+                    <input name='password' onChange={getVaue} value={data.password}
+                        type={visible ? "text" : "password"}
+                        placeholder='Enter your password'
+                        required
+                        className='w-full py-2 px-2 outline-none border-none bg-transparent'
+                        />
+                    <button
+                        type="button"
+                        onClick={() => setVisible(!visible)}
+                        className='text-2xl text-gray-600 hover:text-black cursor-pointer'
+                        >
+                        {visible ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff />}
+                    </button>
+                </div>
+                </div>
+                <div className='flex flex-col gap-2'>
+                    <label htmlFor="">Identity</label>
+                    <input type="text" name='Identity' onChange={getVaue} value={data.Identity} placeholder='Enter your identity' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
                 </div>
                     <div className='flex flex-col gap-2 mt-2'>
                         <div className='flex items-center gap-2'>

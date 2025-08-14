@@ -1,4 +1,4 @@
-
+/* Existing styles remain exactly the same */
 .headerMain {
   background-color: black;
   color: white;
@@ -69,10 +69,12 @@
   margin-left: 1em;
   text-decoration: none;
 }
-.cardLink{
+
+.cardLink {
   text-decoration: none;
   color: white;
 }
+
 .gridCard:hover {
   transition: all 0.1s ease-in-out;
   background-color: #171717;
@@ -94,6 +96,12 @@
   margin-top: 3em;
   font-size: 20px;
   margin-left: 4em;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+  font-size: 2rem;
 }
 
 /* Contact Form Styles */
@@ -182,15 +190,73 @@
   margin-bottom: 1em;
 }
 
-/* Responsive Styles */
+.submitButton {
+  width: 250px;
+  padding: 0.75em;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 1em;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Only responsive additions below this line */
+@media (max-width: 1200px) {
+  .form input {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
 @media (max-width: 768px) {
   .gridCard {
     width: 100%;
+    padding: 2em;
   }
 
-  .contactUsFormItem {
-    flex-direction: column;
-    text-align: center;
-    gap: 1em;
+  .gridCard h1 {
+    font-size: 2.5em;
+    margin-left: 0.5em;
+  }
+
+  .contactUs,
+  .contactUsFormItem,
+  .contactUsFormItem2,
+  .contactUsFormItem3 {
+    padding: 2em;
+  }
+
+  .contactUsFormItem2 h1 {
+    font-size: 3em;
+  }
+
+  .followUs {
+    margin-left: 2em;
+  }
+
+  .form input {
+    padding: 1.5em;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactUs p,
+  .contactUsFormItem p {
+    font-size: 20px;
+  }
+
+  .contactUsFormItem2 h1 {
+    font-size: 2.5em;
+  }
+
+  .gridCard {
+    padding: 1.5em;
+  }
+
+  .submitButton {
+    width: 100%;
   }
 }

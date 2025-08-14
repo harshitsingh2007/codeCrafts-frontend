@@ -4,12 +4,10 @@ import { MainPage } from './MainPage/MainPage';
 import { SignUp } from './Authorization/signup/SignUp.js';
 import { LoginPage } from './Authorization/login/LoginPage.js';
 import VerifyEmail from './Authorization/VerifyEmail/VerifyEmail.js';
-import { DesignMain } from './Design/DesignMain';
 import {TemplateMain}  from './Template/TemplateMain';
 import AboutUs from './About-us/AboutUs';
 import ContactUs from './ContactUs/ContactUs';
 import Account from './user-account/Account';
-import Pricing from './pricing/Pricing';
 import MainPageAdmin from './pages/Admin/Admin-login/MainPageAdmin.js';
 import Error from './Component/404-page/Error.jsx';
 import Loader from './Component/Utils/Loader.jsx';
@@ -19,7 +17,8 @@ import Navbar2 from './Component/All-navbar/Navbar2.jsx';
 import OurServices from './pages/services/OurServices.jsx';
 import { useEffect } from 'react';
 import {useLoader}  from './Component/Utils/UseLoader.jsx';
-import { userAuthStore } from './auth/auth.js';
+import { userAuthStore } from './store/auth/auth.js';
+import AdminPane from './pages/Admin/admin_Panel/AdminPane.js';
 function App() {
 const Navigate=useNavigate();
   const isLoading=useLoader();
@@ -58,23 +57,23 @@ const Navigate=useNavigate();
 
   return (
     <>
-      <div tabIndex={0}>
+      <div tabIndex={0} >
         {shouldShowNavFooter && (isauth ? <NavbarNew /> : <Navbar2 />)}
         
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<SignUp />)} />
           <Route path='/login' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<LoginPage />)} />
-          <Route path="/design" element={<DesignMain />} />
-          <Route path="/template" element={<TemplateMain />} />
+          <Route path="/explore" element={<TemplateMain />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/admin/MainPage" element={<MainPageAdmin />} />
-         <Route path="*" element={<Error />} />
+          <Route path="*" element={<Error />} />
           <Route path="/services" element={<OurServices />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+
+          <Route path="/admin" element={<MainPageAdmin />} />
+          <Route path="/admin/page" element={<AdminPane/>}/>
         </Routes>
         
         {shouldShowNavFooter && <Footer />}

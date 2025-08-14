@@ -16,8 +16,7 @@ const logout = async () => {
         'Content-Type': 'application/json'
       }
     });
-    console.log(res.data);
-    Navigate('/login');
+      Navigate('/login');
   } catch (error) {
     console.log(error.message, "logout error");
     toast.error("Logout failed. Please try again.");
@@ -38,6 +37,10 @@ return (
               <button>Create a new folder</button>
               <button>Create a new Website</button>
             </div>
+          </div>
+          
+          <div>
+
           </div>
 
           <div className={styles.logOut}>

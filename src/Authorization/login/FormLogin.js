@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
 import { RiLoader2Fill } from "react-icons/ri";
-import { userAuthStore } from '../../auth/auth.js'
+import { userAuthStore } from '../../store/auth/auth.js'
 export default function FormLogin() {
   const Navigate = useNavigate()
   const {isLoading,login}=userAuthStore()

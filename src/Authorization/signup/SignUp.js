@@ -4,7 +4,7 @@ import Form from './Form';
 export function SignUp() {
   return (
     <>
-      <div className=" bg-[#000000] text-white ">
+      <div className="bg-[#000000] text-white ">
       <Body />
       <Form />
       </div>

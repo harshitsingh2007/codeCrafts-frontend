@@ -1,30 +1,33 @@
 import React from 'react';
 import { useState } from 'react';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
-import { userAuthStore } from '../../auth/auth.js';
+import { userAuthStore } from '../../store/auth/auth.js';
 import { useNavigate } from 'react-router-dom';
 export default function VerifyEmai() {
   const Navigate=useNavigate()
     const {verifyEmail } = userAuthStore();
-
     const [code, setCode] = useState("");
+
     const setgetcode = (e) => {
         setCode(e.target.value);
     };
 
     const handleVerifyEmail = async (e) => {
-        e.preventDefault();
-        try {
-         const res= await verifyEmail(code);
-          if (res.success) {
+    e.preventDefault();
+    try {
+        const res = await verifyEmail({ code }); 
+        if (res && res.success) {
             alert("Email verified successfully");
-            console.log("Email verified successfully");
-            Navigate('/')
-          }
-        } catch (error) {
-            console.error("Verification error:", error.response?.data || error.message);
+            Navigate('/');
+        } else {
+            alert(res?.message || "Verification failed");
         }
-    };
+    } catch (error) {
+        alert(error.message || "Verification failed. Please try again.");
+        console.error("Verification error:", error);
+    }
+};
+    
   return (
     <div className="min-h-screen flex items-center justify-center bg-black px-4">
       <div className="bg-white p-10 rounded-2xl shadow-xl text-center max-w-md w-full">

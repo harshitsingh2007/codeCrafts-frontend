@@ -5,8 +5,8 @@ import codeCrafts from '../../images/codecrafts.png'
 
 export default function NavbarNew() {
   const [isOnline, setOnline] = useState(navigator.onLine);
-  const navigate = useNavigate();    
-
+  const [search,setsearch]=useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     const handleOnline = () => setOnline(true);
     const handleOffline = () => setOnline(false);
@@ -18,7 +18,7 @@ export default function NavbarNew() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, []); 
 
   return (
     <div className='bg-black text-white fixed w-full z-50'>
@@ -46,9 +46,8 @@ export default function NavbarNew() {
         
         <div className='flex items-center gap-3'>
           <input 
-            type="text"  
-            className='py-2.5 w-[500px] rounded-xl bg-white/20 border-0 outline-none px-3 text-[18px] focus:w-[650px] transition-all duration-300 ease-in-out'
-          />
+          type="text"  onChange={(e)=>{setsearch(e.target.value)}}
+          className='py-2.5 w-[500px] rounded-xl bg-white/20 border-0 outline-none px-3 text-[18px] focus:w-[650px] transition-all duration-300 ease-in-out'/>
           <FaSearch/>
         </div>
         
