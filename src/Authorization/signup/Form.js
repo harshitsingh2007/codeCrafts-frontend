@@ -29,7 +29,7 @@ export default function Form() {
 const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const result = await signup(data.email, data.password,data.name,data.Identity);
+        const result = await signup(data.name,data.email,data.password,data.Identity);
         if (result?.success) {
             setdata({ 
                 email: "",
@@ -48,61 +48,87 @@ const handleSubmit = async (e) => {
     }
 }
     return (
-        <div className='p-7 flex justify-center'>
-            <div className='bg-white rounded-xl text-black w-[450px] h-[700px] py-4 px-4'>
+        <div className='flex justify-center flex-col items-center'>
+            <div className='bg-white rounded-xl text-black max-w  py-4 px-4 '>
                 <button className='bg-black flex items-center text-center gap-3 text-[20px] py-2 px-5 w-full rounded-lg'>
                     <FcGoogle size={30} />
                     <span className='text-white'>Sign Up with Google</span>
                 </button>
-                <div className="flex items-center w-full my-4">
+                <div className="flex items-center w-full my-3">
                     <div className="flex-1 h-px bg-gray-300"></div>
                     <span className="px-3 text-sm text-gray-500">OR</span>
                     <div className="flex-1 h-px bg-gray-300"></div>
                 </div>
-                <form onSubmit={handleSubmit} method='POST' className='flex flex-col gap-4'>
-                    <div className='flex flex-col gap-2'>
-                        <label htmlFor="">Name</label>
-                        <input type="text" name='name' onChange={getVaue} value={data.name} placeholder='Enter your name' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
-                    </div>
-                  
-                    <div className='flex flex-col gap-2'>
-                        <label htmlFor="">Email</label>
-                        <input type="email" name='email' onChange={getVaue} value={data.email} placeholder='Enter your email' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
-                    </div>
-                <div className='flex flex-col gap-2'>
-                <label htmlFor="">Password</label>
-                <div className='flex w-full items-center justify-between border border-black rounded-lg px-2 shadow-md max-w-md mx-auto'>
-                    <input name='password' onChange={getVaue} value={data.password}
-                        type={visible ? "text" : "password"}
-                        placeholder='Enter your password'
-                        required
-                        className='w-full py-2 px-2 outline-none border-none bg-transparent'
+                <form onSubmit={handleSubmit}>
+                    <div className='flex flex-col mb-2'>
+                        <label className='text-[16px] mb-1'>Name</label>
+                        <input 
+                            type="text" 
+                            name="name"
+                            value={data.name}
+                            onChange={getVaue}
+                            className='border-[1px] border-black rounded-lg py-2 px-3'
+                            required
                         />
-                    <button
-                        type="button"
-                        onClick={() => setVisible(!visible)}
-                        className='text-2xl text-gray-600 hover:text-black cursor-pointer'
-                        >
-                        {visible ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff />}
-                    </button>
-                </div>
-                </div>
-                <div className='flex flex-col gap-2'>
-                    <label htmlFor="">Identity</label>
-                    <input type="text" name='Identity' onChange={getVaue} value={data.Identity} placeholder='Enter your identity' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md' />
-                </div>
-                    <div className='flex flex-col gap-2 mt-2'>
-                        <div className='flex items-center gap-2'>
-                            <input type="checkbox" name="" id="" required />
-                            <label htmlFor="" className='ml-2'>I agree to the Terms of Service and Privacy Policy</label>
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <input type="checkbox" name="" id="" />
-                            <label htmlFor="" className='ml-2'>I want to receive updates and special offers</label>
+                    </div>
+                    <div className='flex flex-col mb-2'>
+                        <label className='text-[16px] mb-1'>Email</label>
+                        <input 
+                            type="email" 
+                            name="email"
+                            value={data.email}
+                            onChange={getVaue}
+                            className='border-[1px] border-black rounded-lg py-2 px-3'
+                            required
+                        />
+                    </div>
+                    <div className='flex flex-col mb-2'>
+                        <label className='text-[16px] mb-1'>Password</label>
+                        <div className='relative'>
+                            <input 
+                                type={visible ? "text" : "password"}
+                                name="password"
+                                value={data.password}
+                                onChange={getVaue}
+                                className='border-[1px] border-black rounded-lg py-2 px-3 w-full pr-10'
+                                required
+                            />
+                            <button 
+                                type="button"
+                                onClick={() => setVisible(!visible)}
+                                className='absolute right-3 top-2'
+                            >
+                                {visible ? <MdOutlineVisibilityOff size={20} /> : <MdOutlineVisibility size={20} />}
+                            </button>
                         </div>
                     </div>
-                    <button className='bg-black py-2 px-4 text-white rounded-lg'>{isloading?<RiLoader2Fill className='animate-spin'/>:"Sign Up"}</button>
+                    <div className='flex flex-col mb-4'>
+                        <label className='text-[16px] mb-1'>Identity</label>
+                        <select 
+                            name="Identity"
+                            value={data.Identity}
+                            onChange={getVaue}
+                            className='border-[1px] border-black rounded-lg py-2 px-3'
+                            required
+                        >
+                            <option value="" disabled>Select Identity</option>
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <button 
+                        type="submit" 
+                        disabled={isloading}
+                        className='bg-black text-white py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 disabled:opacity-50'
+                    >
+                        {isloading && <RiLoader2Fill className="animate-spin" />}
+                        {isloading ? 'Signing Up...' : 'Sign Up'}
+                    </button>
                 </form>
+            </div>
+            <div className='text-center mt-4 flex flex-col items-center gap-1'>
+                <p className="text-[13px] w-[300px]">By signing up, you agree to the <a href=''>Terms of Services</a> and <a href=''>Privacy Policy</a></p>
+                <p className='text-[13px]'>Protected by reCAPTCHA, Terms of Services and Privacy Policy</p>
             </div>
         </div>
     )

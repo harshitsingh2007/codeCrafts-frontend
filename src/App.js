@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import NavbarLogin from './Component/All-navbar/NavbarLogin.jsx';
 import Navbar from './Component/All-navbar/Navbar.jsx';
 import Footer from './Component/Fotter/Footer.js';
@@ -20,7 +20,6 @@ import {useLoader}  from './Component/Utils/UseLoader.jsx';
 import { userAuthStore } from './store/auth/auth.js';
 import AdminPane from './pages/Admin/admin_Panel/AdminPane.js';
 function App() {
-const Navigate=useNavigate();
   const isLoading=useLoader();
   const data = localStorage.getItem('udata');
   const location = useLocation();
@@ -67,8 +66,8 @@ const Navigate=useNavigate();
           <Route path="/services" element={<OurServices />} />
 
           <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<SignUp />)} />
-          <Route path='/login' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<LoginPage />)} />
-    
+          <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/' replace/>):(<SignUp />)} />
+          <Route path='/login' element={(isauth && user?.isVerified) ? (<Navigate to='/' replace/>):(<LoginPage />)} />
           <Route path="/explore" element={<Explore/>} />
           <Route path="/account" element={<UserAccount />} />
           <Route path="*" element={<Error />} />

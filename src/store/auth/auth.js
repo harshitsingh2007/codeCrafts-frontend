@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import axios from 'axios'
-const API_URL = "https://codecrafts-backend.onrender.com/api/auth";
+const API_URL = "http://localhost:4000/api/auth";
 export const userAuthStore = create((set) => ({
     isLoading: false,
     isauth: false,
@@ -13,7 +13,6 @@ signup: async (name, email, password,Identity) => {
     try {
         const response = await axios.post(`${API_URL}/signup`, {name, email, password, Identity});
         const responseData = response.data;
-        
         set({
             isLoading: false,
             user: responseData.user || null,
@@ -58,6 +57,7 @@ signup: async (name, email, password,Identity) => {
             console.log(error.message);
         }
     },
+    
     logout: async () => {
         set({ isLoading: true });
         try {
@@ -113,6 +113,8 @@ forgotPassword:async(email)=>{
     //         console.log(error.message);
     //     }
     // }, 
+
+
     verifyEmail: async (code) => {
     set({ isLoading: true });
     try {

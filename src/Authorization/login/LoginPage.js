@@ -4,7 +4,7 @@ import FormLogin from './FormLogin';
 export const LoginPage = () => {
     return (
       <>
-    <div className='bg-black text-white w-full h-[100vh]'>
+    <div className='bg-black text-white h-[100vh]'>
     <Bodylogin/>
     <FormLogin />
   </div>
