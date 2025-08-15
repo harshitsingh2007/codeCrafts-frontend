@@ -5,7 +5,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { Navigate, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function Navbar2() {
+export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {

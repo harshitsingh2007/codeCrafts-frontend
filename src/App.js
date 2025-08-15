@@ -1,21 +1,21 @@
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import NavbarLogin from './Component/All-navbar/NavbarLogin.jsx';
+import Navbar from './Component/All-navbar/Navbar.jsx';
+import Footer from './Component/Fotter/Footer.js';
 import { MainPage } from './MainPage/MainPage';
 import { SignUp } from './Authorization/signup/SignUp.js';
 import { LoginPage } from './Authorization/login/LoginPage.js';
 import VerifyEmail from './Authorization/VerifyEmail/VerifyEmail.js';
-import {TemplateMain}  from './Template/TemplateMain';
+import Explore from './Explore/Explore.js';
 import AboutUs from './About-us/AboutUs';
 import ContactUs from './ContactUs/ContactUs';
-import Account from './user-account/Account';
+import UserAccount from './user-account/UserAccount.js'
 import MainPageAdmin from './pages/Admin/Admin-login/MainPageAdmin.js';
 import Error from './Component/404-page/Error.jsx';
 import Loader from './Component/Utils/Loader.jsx';
-import Footer from './Component/Fotter/Footer.js';
-import NavbarNew from './Component/All-navbar/NavbarNew.jsx';
-import Navbar2 from './Component/All-navbar/Navbar2.jsx';
 import OurServices from './pages/services/OurServices.jsx';
-import { useEffect } from 'react';
 import {useLoader}  from './Component/Utils/UseLoader.jsx';
 import { userAuthStore } from './store/auth/auth.js';
 import AdminPane from './pages/Admin/admin_Panel/AdminPane.js';
@@ -58,18 +58,20 @@ const Navigate=useNavigate();
   return (
     <>
       <div tabIndex={0} >
-        {shouldShowNavFooter && (isauth ? <NavbarNew /> : <Navbar2 />)}
+        {shouldShowNavFooter && (isauth ? <NavbarLogin /> : <Navbar />)}
         
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<SignUp />)} />
-          <Route path='/login' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<LoginPage />)} />
-          <Route path="/explore" element={<TemplateMain />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="*" element={<Error />} />
           <Route path="/services" element={<OurServices />} />
+
+          <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<SignUp />)} />
+          <Route path='/login' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<LoginPage />)} />
+    
+          <Route path="/explore" element={<Explore/>} />
+          <Route path="/account" element={<UserAccount />} />
+          <Route path="*" element={<Error />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
 
           <Route path="/admin" element={<MainPageAdmin />} />

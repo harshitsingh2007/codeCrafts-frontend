@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { templateStore } from '../store/data/Templatedata'
 
-export function TemplateMain() {
+export default function TemplateMain() {
   const { templates, fetchTemplate } = templateStore();
   
   useEffect(() => {

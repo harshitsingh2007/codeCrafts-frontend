@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import styles from './Account.module.css'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +9,7 @@ const API_URL = 'https://codecrafts-backend.onrender.com';
 
 const logout = async () => {
   try {
-    const res = await axios.post(`${API_URL}/api/auth/logout`, {}, {
+     await axios.post(`${API_URL}/api/auth/logout`, {}, {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
