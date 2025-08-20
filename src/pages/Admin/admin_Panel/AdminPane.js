@@ -154,10 +154,7 @@ export default function AdminPane() {
                   >
                     Cancel
                   </button>
-                  <button
-                    type='submit'
-                    className='px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-500 transition'
-                  >
+                  <button type='submit' className='px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-500 transition'>
                     Add Template
                   </button>
                 </div>

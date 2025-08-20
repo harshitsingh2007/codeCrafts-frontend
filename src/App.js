@@ -19,16 +19,17 @@ import OurServices from './pages/services/OurServices.jsx';
 import {useLoader}  from './Component/Utils/UseLoader.jsx';
 import { userAuthStore } from './store/auth/auth.js';
 import AdminPane from './pages/Admin/admin_Panel/AdminPane.js';
+import CodeCrafts_Plus from './CodeCrafts+/CodeCrafts_Plus.jsx';
+import ForgotPassword from './Authorization/ForgotPassword/ForgotPassword.js';
 function App() {
   const isLoading=useLoader();
-  const data = localStorage.getItem('udata');
   const location = useLocation();
- const { isauth, user } = userAuthStore()
+ const { isauth, user} = userAuthStore()
   const excludeNavFooter = ['/signup', '/login', '/loader', '*','/contact','/verify-email'];
   const shouldShowNavFooter = !excludeNavFooter.includes(location.pathname);
 
   useEffect(() => {
-    if (!data) {
+    if (!isauth) {
       const handleKeyDown = (e) => {
         const active = document.activeElement;
         const isTyping =
@@ -48,7 +49,7 @@ function App() {
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [data]);
+  }, [isauth]);
 
   if (isLoading) {
     return <Loader/>
@@ -57,7 +58,7 @@ function App() {
   return (
     <>
       <div tabIndex={0} >
-        {shouldShowNavFooter && (isauth ? <NavbarLogin /> : <Navbar />)}
+        {shouldShowNavFooter && (isauth ? <NavbarLogin/> : <Navbar />)}
         
         <Routes>
           <Route path="/" element={<MainPage />} />
@@ -65,16 +66,18 @@ function App() {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/services" element={<OurServices />} />
 
-          <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/'/>):(<SignUp />)} />
           <Route path='/signup' element={(isauth && user?.isVerified) ? (<Navigate to='/' replace/>):(<SignUp />)} />
           <Route path='/login' element={(isauth && user?.isVerified) ? (<Navigate to='/' replace/>):(<LoginPage />)} />
           <Route path="/explore" element={<Explore/>} />
           <Route path="/account" element={<UserAccount />} />
           <Route path="*" element={<Error />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path='/forgot-password' element={<ForgotPassword/>} />
 
           <Route path="/admin" element={<MainPageAdmin />} />
           <Route path="/admin/page" element={<AdminPane/>}/>
+
+          <Route path='/CodeCrafts/plus'  element={<CodeCrafts_Plus/>}/>
         </Routes>
         
         {shouldShowNavFooter && <Footer />}

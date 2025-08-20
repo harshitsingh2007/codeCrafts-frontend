@@ -37,7 +37,7 @@ const handleSubmit = async (e) => {
                 name:"",
                 Identity:"", 
             });
-         Navigate('/');
+         Navigate('/verify-email');
         } else {
             alert(result?.message || "Signup failed. Please try again.");
         }
