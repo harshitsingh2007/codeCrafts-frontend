@@ -23,7 +23,7 @@ export default function FormLogin() {
                 e.preventDefault();
                 try {
                      const res = await login(data.email, data.password);
-                     console.log("Login response:", res); // Add this to debug
+                     console.log("Login response:", res); 
                         if (res && res.success === true) {
                                 setdata({
                                         email: "",

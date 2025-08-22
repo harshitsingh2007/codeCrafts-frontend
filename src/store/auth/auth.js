@@ -38,25 +38,38 @@ signup: async (name, email, password,Identity) => {
         };
     }
 },
-    login: async (email, password) => {
-        set({ isLoading: true,isauth: false, error: null });
-        try {
-            const res = await axios.post(`${API_URL}/login`, { email, password });
-            console.log(res.data);
-            set({
-                isLoading: false,
-                user: res.data.user || null,
-                isauth: true,
-                message: res.data.message || "Login successful"
-            });
-        } catch (error) {
-            set({
-                isLoading: false,
-                error: error.response?.data?.message || error.message,
-            });
-            console.log(error.message);
-        }
-    },
+login: async (email, password) => {
+    set({ isLoading: true, isauth: false, error: null });
+    try {
+        const res = await axios.post(`${API_URL}/login`, { email, password });
+        console.log(res.data);
+        set({
+            isLoading: false,
+            user: res.data.user || null,
+            isauth: true,
+            message: res.data.message || "Login successful"
+        });
+        
+        // Return the response data
+        return {
+            success: true,
+            message: res.data.message,
+            user: res.data.user
+        };
+    } catch (error) {
+        const errorMsg = error.response?.data?.message || error.message;
+        set({
+            isLoading: false,
+            error: errorMsg,
+        });
+        
+        // Return error information
+        return {
+            success: false,
+            message: errorMsg
+        };
+    }
+},
     
     logout: async () => {
         set({ isLoading: true,isauth:true, error: null });
