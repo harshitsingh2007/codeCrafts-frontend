@@ -78,25 +78,7 @@ signup: async (name, email, password,Identity) => {
             console.log(error.message);
         }
     },
-forgotPassword:async(email)=>{
-         set({isLoading: true},{error: null});
-        try {
-            const res = await axios.post(`${API_URL}/forgot-password`, { email });
-            set({
-                 isLoading:false,
-                message:res.data.message || "forgot password link send to your email"
-            })
-
-        } catch (error) {
-           set({
-                isLoading: false,
-                error:error.res.data.message
-            });
-            throw error;
-        }
-    },
-
-  verifyEmail: async (code) => {
+      verifyEmail: async (code) => {
         set({ isLoading: true, error: null });
         try {
             const res = await axios.post(`${API_URL}/verify-email`, { code });
@@ -115,6 +97,28 @@ forgotPassword:async(email)=>{
             throw new Error(errorMsg);
         }
     },
+forgotPassword:async(email)=>{
+        set({isLoading: true,error: null});
+        try {
+            const res = await axios.post(`${API_URL}/forgot-password`, { email });
+            set({
+                 isLoading:false,
+                message:res.data.message || "forgot password link send to your email"
+            })
+
+             return {
+            success: res.data.success,
+            message: res.data.message
+        };
+
+        } catch (error) {
+           set({
+                isLoading: false,
+                error:error.res.data.message
+            });
+            throw error;
+        }
+    },
 
     resetpassword:async(password,token)=>{
      set({isLoading:true,error:null});
@@ -126,7 +130,8 @@ forgotPassword:async(email)=>{
         message: res.data.message || "Password reset successful",
         error: null
       })
-        
+          return { success: true, message: res.data.message };   // <-- return value
+
      } catch (error) {
         set(
             {
@@ -134,6 +139,8 @@ forgotPassword:async(email)=>{
             error: error.response?.data?.message || error.message,
             }
         )
+        return { success: false, message: error.response?.data?.message || error.message };  // <-- return value
      }
+
     }  
 }));

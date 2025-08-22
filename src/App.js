@@ -21,6 +21,7 @@ import { userAuthStore } from './store/auth/auth.js';
 import AdminPane from './pages/Admin/admin_Panel/AdminPane.js';
 import CodeCrafts_Plus from './CodeCrafts+/CodeCrafts_Plus.jsx';
 import ForgotPassword from './Authorization/ForgotPassword/ForgotPassword.js';
+import ResetPassword from './Authorization/ResetPassword/ResetPassword.jsx';
 function App() {
   const isLoading=useLoader();
   const location = useLocation();
@@ -73,7 +74,7 @@ function App() {
           <Route path="*" element={<Error />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path='/forgot-password' element={<ForgotPassword/>} />
-
+          <Route path='/reset-password/' element={<ResetPassword/>}/>
           <Route path="/admin" element={<MainPageAdmin />} />
           <Route path="/admin/page" element={<AdminPane/>}/>
 

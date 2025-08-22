@@ -4,7 +4,6 @@ import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
 import { RiLoader2Fill } from "react-icons/ri";
 import { userAuthStore } from '../../store/auth/auth.js'
-
 export default function FormLogin() {
         const Navigate = useNavigate()
         const { isLoading, login } = userAuthStore()
@@ -68,7 +67,7 @@ export default function FormLogin() {
                                         </div>
 
                                         <div className='flex flex-col items-center justify-center mt-3 gap-1 text-sm sm:text-base'>
-                                                <p>Forgot your Password?</p>
+                                                <button onClick={()=>Navigate('/forgot-password')}>Forgot your Password?</button>
                                                 <p className='text-center'>New at CodeCrafts?<span onClick={() => Navigate('/signup')} className='ml-2 underline cursor-pointer'>Create Account</span></p>
                                         </div>
                                 </form>

@@ -35,7 +35,7 @@ const handleSubmit = async (e) => {
                 email: "",
                 password: "",
                 name:"",
-                Identity:"", 
+                Identity:"",
             });
          Navigate('/verify-email');
         } else {
