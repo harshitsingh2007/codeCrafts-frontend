@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { userAuthStore } from '../../store/auth/auth';
+
 export default function ForgotPassword() {
   const { forgotPassword } = userAuthStore();
   const [data, setData] = useState({ email: ''});
+  const [loading, setLoading] = useState(false);
 
   const getValue = (e) => {
     const { name, value } = e.target;
@@ -11,8 +13,10 @@ export default function ForgotPassword() {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const result = await forgotPassword(data.email);
       if (result?.success) {
@@ -26,6 +30,8 @@ export default function ForgotPassword() {
     } catch (error) {
       console.log("Forgot password error:", error);
       alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,15 +55,17 @@ export default function ForgotPassword() {
               onChange={getValue} 
               placeholder="Enter your email" 
               required 
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              disabled={loading}
+              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50"
             />
           </div>
           
           <button 
             type="submit" 
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
-            Send Reset Link
+            {loading ? 'Sending...' : 'Send Reset Link'}
           </button>
         </form>
         

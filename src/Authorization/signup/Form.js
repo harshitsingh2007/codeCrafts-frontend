@@ -7,9 +7,10 @@ import { RiLoader2Fill } from "react-icons/ri";
 import { userAuthStore } from '../../store/auth/auth.js';
 
 export default function Form() {
-    const {isloading,signup}=userAuthStore();
+    const {signup}=userAuthStore();
     const Navigate = useNavigate()
     const [visible, setVisible] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const [data, setdata] = useState({
         name:"",
@@ -28,6 +29,7 @@ export default function Form() {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
         const result = await signup(data.name,data.email,data.password,data.Identity);
         if (result?.success) {
@@ -45,6 +47,8 @@ const handleSubmit = async (e) => {
     } catch (error) {
         console.error("Signup error:", error);
         alert(error.message || "An unexpected error occurred");
+    } finally {
+        setIsLoading(false);
     }
 }
     return (
@@ -68,6 +72,7 @@ const handleSubmit = async (e) => {
                             value={data.name}
                             onChange={getVaue}
                             className='border-[1px] border-black rounded-lg py-2 px-3'
+                            disabled={isLoading}
                             required
                         />
                     </div>
@@ -79,6 +84,7 @@ const handleSubmit = async (e) => {
                             value={data.email}
                             onChange={getVaue}
                             className='border-[1px] border-black rounded-lg py-2 px-3'
+                            disabled={isLoading}
                             required
                         />
                     </div>
@@ -91,12 +97,14 @@ const handleSubmit = async (e) => {
                                 value={data.password}
                                 onChange={getVaue}
                                 className='border-[1px] border-black rounded-lg py-2 px-3 w-full pr-10'
+                                disabled={isLoading}
                                 required
                             />
                             <button 
                                 type="button"
                                 onClick={() => setVisible(!visible)}
                                 className='absolute right-3 top-2'
+                                disabled={isLoading}
                             >
                                 {visible ? <MdOutlineVisibilityOff size={20} /> : <MdOutlineVisibility size={20} />}
                             </button>
@@ -109,6 +117,7 @@ const handleSubmit = async (e) => {
                             value={data.Identity}
                             onChange={getVaue}
                             className='border-[1px] border-black rounded-lg py-2 px-3'
+                            disabled={isLoading}
                             required
                         >
                             <option value="" disabled>Select Identity</option>
@@ -118,11 +127,17 @@ const handleSubmit = async (e) => {
                     </div>
                     <button 
                         type="submit" 
-                        disabled={isloading}
+                        disabled={isLoading}
                         className='bg-black text-white py-2 px-4 rounded-lg w-full flex items-center justify-center gap-2 disabled:opacity-50'
                     >
-                        {isloading && <RiLoader2Fill className="animate-spin" />}
-                        {isloading ? 'Signing Up...' : 'Sign Up'}
+                        {isLoading ? (
+                            <>
+                                <RiLoader2Fill className="animate-spin" size={20} />
+                                Signing up...
+                            </>
+                        ) : (
+                            'Sign Up'
+                        )}
                     </button>
                 </form>
             </div>

@@ -12,6 +12,7 @@ export default function ResetPassword() {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getValue = (e) => {
     const { name, value } = e.target;
@@ -60,6 +61,7 @@ export default function ResetPassword() {
     }
     
     setIsSubmitting(true);
+    setIsLoading(true);
     
     try {
       const result = await resetpassword(data.password, token);
@@ -77,8 +79,20 @@ export default function ResetPassword() {
       alert("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex justify-center items-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p>Resetting password...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white flex justify-center items-center py-8">
