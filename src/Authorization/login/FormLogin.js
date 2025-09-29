@@ -6,7 +6,7 @@ import { RiLoader2Fill } from "react-icons/ri";
 import { userAuthStore } from '../../store/auth/auth.js'
 export default function FormLogin() {
         const Navigate = useNavigate()
-        const { isLoading, login } = userAuthStore()
+        const { isLoading, login,setuserId } = userAuthStore()
         const [data, setdata] = useState({
                 email: "",
                 password: "",
@@ -67,8 +67,8 @@ export default function FormLogin() {
                                         </div>
 
                                         <div className='flex flex-col items-center justify-center mt-3 gap-1 text-sm sm:text-base'>
-                                                <button onClick={()=>Navigate('/forgot-password')}>Forgot your Password?</button>
-                                                <p className='text-center'>New at CodeCrafts?<span onClick={() => Navigate('/signup')} className='ml-2 underline cursor-pointer'>Create Account</span></p>
+                                                <button onClick={()=>Navigate('/forgot-password')} className='hover:underline'>Forgot your Password?</button>
+                                                <p className='text-center'>New at CodeCrafts?<span onClick={() => Navigate('/signup')} className='ml-2 hover:underline cursor-pointer'>Create Account</span></p>
                                         </div>
                                 </form>
                         </div>

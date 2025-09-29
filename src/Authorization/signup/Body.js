@@ -19,7 +19,7 @@ function Body() {
                     Already have a account?
                     <button 
                         onClick={() => Navigate('/login')} 
-                        className='font-bold ml-2 underline hover:text-blue-500 break-words'
+                        className='font-bold ml-2  hover:underline break-words'
                     >
                         Login
                     </button>

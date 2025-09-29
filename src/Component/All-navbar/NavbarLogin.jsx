@@ -8,7 +8,7 @@ export default function NavbarNew() {
   const [search,setsearch]=useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const handleOnline = () => setOnline(true);
     const handleOffline = () => setOnline(false);
@@ -20,7 +20,8 @@ export default function NavbarNew() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []); 
+  }, []);
+
 
   return (
     <div className='bg-black text-white fixed w-full z-50'>
@@ -33,30 +34,34 @@ export default function NavbarNew() {
             className='h-[30px] sm:h-[36px] cursor-pointer' 
             onClick={() => navigate('/')}
           />
-          <div className='hidden md:flex gap-4'>
+          <div className='hidden ml-3 md:flex gap-4'>
             <NavLink 
-              to="/explore" 
-              className={({isActive}) => `no-underline ${isActive ? "text-white" : "text-gray-400"}`}
-            >
-              Discover
-            </NavLink>
-            <NavLink 
-              to="/design" 
+              to="/shop" 
               className={({isActive}) => `no-underline ${isActive ? "text-white" : "text-gray-400"}`}
             >
               Shop
+            </NavLink>
+            <NavLink 
+              to="/custom" 
+              className={({isActive}) => `no-underline ${isActive ? "text-white" : "text-gray-400"}`}
+            >
+              Custom
             </NavLink>
           </div>
         </div>
         
         {/* Search Bar - Hidden on mobile */}
         <div className='hidden lg:flex items-center gap-3'>
+          <form className='flex items-center gap-3 bg-white/10 px-3 py-1.5 rounded-full'>
           <input 
             type="text" 
             onChange={(e)=>{setsearch(e.target.value)}}
             className='py-2.5 w-[300px] xl:w-[500px] rounded-xl bg-white/20 border-0 outline-none px-3 text-[16px] xl:text-[18px] focus:w-[400px] xl:focus:w-[650px] transition-all duration-300 ease-in-out'
           />
+          <button>
           <FaSearch/>
+          </button>
+          </form>
         </div>
         
         {/* Right side - Profile and Mobile Menu */}
@@ -94,13 +99,6 @@ export default function NavbarNew() {
       {isMobileMenuOpen && (
         <div className='md:hidden bg-black border-t border-gray-700'>
           <div className='px-4 py-2 space-y-2'>
-            <NavLink 
-              to="/explore" 
-              className={({isActive}) => `block py-2 no-underline ${isActive ? "text-white" : "text-gray-400"}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Discover
-            </NavLink>
             <NavLink 
               to="/design" 
               className={({isActive}) => `block py-2 no-underline ${isActive ? "text-white" : "text-gray-400"}`}

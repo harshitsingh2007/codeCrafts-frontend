@@ -32,6 +32,7 @@ export default function VerifyEmail() {
     };
 
     return (
+        
         <div className="min-h-screen flex items-center justify-center bg-black px-4">
             <div className="bg-white p-10 rounded-2xl shadow-xl text-center max-w-md w-full">
                 <div className="flex justify-center mb-4 text-indigo-600 text-5xl">

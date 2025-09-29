@@ -18,7 +18,7 @@ export default function Footer() {
             </div>
             <div>
               <h1 className='text-[18px] lg:text-[20px] text-white pb-[10px] hover:text-white'>Resources</h1>
-              <p className='text-sm text-[#adadad] pt-[8px] hover:text-white cursor-pointer'>News</p>
+              <p onClick={()=>Navigate('/about')} className='text-sm text-[#adadad] pt-[8px] hover:text-white cursor-pointer'>About us</p>
               <button onClick={()=>Navigate('/contact')} className='text-sm text-[#adadad] pt-[8px] hover:text-white bg-transparent border-none p-0 text-left'>Contact us</button>
             </div>
             <div className='flex flex-col sm:col-span-2 lg:col-span-1'>

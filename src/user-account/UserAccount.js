@@ -1,3 +1,4 @@
+import React,{useState} from 'react';
 import styles from './Account.module.css'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
@@ -22,32 +23,39 @@ const logout = async () => {
   }
 }
 
+const [loading, setLoading] = useState(false);
+
 return (
-    <>
-      <ToastContainer />
-      <div className={`{styles.AccountMain} py-[4.5em] bg-black text-white`}>
-        <div className={`${styles.Accountcontainer} container`}>
-          <div className={styles.AccountHeader}>
-            <div className={styles.AccountHeaderBody}>
-              <h1>Sites</h1>
-              <p>View and manage all your websites in one place.</p>
-            </div>
-            <div className={styles.AccountHeaderBody}>
-              <button>Create a new folder</button>
-              <button>Create a new Website</button>
-            </div>
+  <>
+    <ToastContainer />
+    <div className={`{styles.AccountMain} py-[4.5em] bg-black text-white`}>
+      <div className={`${styles.Accountcontainer} container`}>
+        <div className={styles.AccountHeader}>
+          <div className={styles.AccountHeaderBody}>
+            <h1>Sites</h1>
+            <p>View and manage all your websites in one place.</p>
           </div>
-          
-          <div>
-
-          </div>
-
-          <div className={styles.logOut}>
-            <button onClick={logout}>Logout</button>
-
+          <div className={styles.AccountHeaderBody}>
+            <button>Create a new folder</button>
+            <button>Create a new Website</button>
           </div>
         </div>
+        
+        <div>
+          {loading && <div>Loading...</div>}
+        </div>
+
+        <div className={styles.logOut}>
+          <button onClick={async () => {
+            setLoading(true);
+            await logout();
+            setLoading(false);
+          }} disabled={loading}>
+            {loading ? 'Logging out...' : 'Logout'}
+          </button>
+        </div>
       </div>
-    </>
-  )
+    </div>
+  </>
+)
 }

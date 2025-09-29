@@ -69,7 +69,7 @@ const data=[
         </div>
       </div>
 
-        <div className='bg-[#0D0D0D] border-2 border-[#313131] py-1 px-1 text-sm sm:text-[16px] text-[#808080] rounded-full flex justify-between items-center gap-1 w-full sm:w-[600px] mt-4'>
+        <div className='bg-[#0D0D0D] py-1 px-1 text-sm sm:text-[16px] text-[#808080] rounded-full flex justify-between items-center gap-1 w-full sm:w-[600px] mt-4'>
           <NavLink className={({isActive})=>`px-2 sm:px-8 py-2 ${isActive? "bg-[#262626] text-white":""} rounded-full flex-1 sm:w-[200px] no-underline text-center text-xs sm:text-base`}>Yearly Save 20%</NavLink>
           <NavLink className={({isActive})=>`px-2 sm:px-8 py-2 ${isActive? "bg-[#262626] text-white":""} rounded-full flex-1 sm:w-[200px] no-underline text-center text-xs sm:text-base`}>Monthly</NavLink>
           <NavLink className={({isActive})=>`px-2 sm:px-8 py-2 ${isActive? "bg-[#262626] text-white":""} rounded-full flex-1 sm:w-[200px] no-underline text-center text-xs sm:text-base`}>Custom</NavLink>
