@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "http://localhost:4000/api/freeLancer";
+const API_URL = "https://codecrafts-backend.onrender.com/api/freeLancer";
 
 export const freeLancerStore = create((set) => ({
   isLoading: false,

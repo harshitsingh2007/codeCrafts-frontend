@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-const Api_url = "http://localhost:4000/api/template";
+const Api_url = "https://codecrafts-backend.onrender.com/api/template";
 
 axios.defaults.withCredentials = true;
 

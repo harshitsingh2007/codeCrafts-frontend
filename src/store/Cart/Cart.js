@@ -1,6 +1,6 @@
 import axios from "axios";
 import { create } from "zustand";
-const api_url = "http://localhost:4000/api/cart";
+const api_url = "https://codecrafts-backend.onrender.com/api/cart";
 
 const useCartStore = create((set) => ({
   isloading: false,
