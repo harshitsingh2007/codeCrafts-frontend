@@ -73,7 +73,7 @@ function App() {
 
         <Routes>
           
-          <Route path='/' element={user?.Identity==="User"?<Shop/>:<MainPage/>}/>
+          <Route path='/' element={user?.Identity==="User"?<Shop/>:<AdminPane/>}/>
           
 
           <Route path="/about" element={<AboutUs />} />
