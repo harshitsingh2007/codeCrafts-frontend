@@ -4,6 +4,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:4000/api/auth";
 
+axios.defaults.withCredentials = true;
+
 export const userAuthStore = create(
   persist(
     (set) => ({
@@ -28,7 +30,7 @@ export const userAuthStore = create(
           set({
             isLoading: false,
             user: responseData.user || null,
-            isauth: true,
+            isauth:false,
             userId: responseData.user?._id || null,
             message: responseData.message || "Signup successful",
             error: null,
@@ -70,30 +72,43 @@ export const userAuthStore = create(
           return { success: false, message: errorMsg };
         }
       },
+  
+  logout: async () => {
+  set({ isLoading: true, error: null });
+  try {
+    const res = await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+    set({
+      isLoading: false,
+      user: null,
+      isauth: false,
+      userId: null,
+      message: res.data?.message || "Logout successful",
+      error: null,
+    });
 
-      // Logout
-      logout: async () => {
-        set({ isLoading: true, error: null });
-        try {
-          const res = await axios.get(`${API_URL}/logout`, { withCredentials: true });
-          if (res.data.success) {
-            localStorage.removeItem("auth-storage");
-            set({
-              isLoading: false,
-              user: null,
-              isauth: false,
-              userId: null,
-              message: res.data.message || "Logout successful",
-              error: null,
-            });
-          } else {
-            set({ isLoading: false, error: res.data.message || "Logout failed" });
-          }
-        } catch (error) {
-          set({ isLoading: false, error: error.response?.data?.message || error.message });
-        }
-      },
+    localStorage.removeItem("auth-storage");
 
+    return { success: true, message: "Logout successful" };
+  } catch (error) {
+    console.error("Logout error:", error);
+
+    
+    set({
+      isLoading: false,
+      user: null,
+      isauth: false,
+      userId: null,
+      error: error.response?.data?.message || "Logout failed",
+    });
+
+    localStorage.removeItem("auth-storage");
+
+    return {
+      success: false,
+      message: error.response?.data?.message || "Logout failed",
+    };
+  }
+},
       // Verify Email
       verifyEmail: async (code) => {
         set({ isLoading: true, error: null });
@@ -123,10 +138,10 @@ export const userAuthStore = create(
       },
 
       // Reset Password
-      resetPassword: async (password, token) => {
+      resetPassword: async (password,token) => {
         set({ isLoading: true, error: null });
         try {
-          const res = await axios.post(`${API_URL}/reset-password`, { password, token }, { withCredentials: true });
+          const res = await axios.post(`${API_URL}/reset-password/${token}`, {password}, { withCredentials: true });
           set({ isLoading: false, message: res.data.message, isauth: false, error: null });
           return { success: true, message: res.data.message };
         } catch (error) {
@@ -135,6 +150,24 @@ export const userAuthStore = create(
           return { success: false, message: errorMsg };
         }
       },
+      checkAuth:async()=>{
+        try {
+          const res = await axios.get(`${API_URL}/check-auth`, { withCredentials: true });
+          const user = res.data.user;
+          if (user) {
+            set({
+              isauth: true,
+              user: user,
+              userId: user._id,
+            });
+          } else {
+            set({ isauth: false, user: null, userId: null });
+          }
+        } catch (error) {
+          console.log("Error in auth check:", error);
+          set({ isauth: false });
+        }
+      }
     }),
     {
       name: "auth-storage", 

@@ -65,7 +65,7 @@ export const freeLancerStore = create((set) => ({
       });
       
       const responseData = res.data;
-      console.log("✅ Backend response:", responseData);
+      console.log("Backend response:", responseData);
       
       set({
         isLoading: false,
@@ -79,7 +79,7 @@ export const freeLancerStore = create((set) => ({
       };
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message;
-      console.error("❌ Error creating freelancer:", errorMsg);
+      console.error("Error creating freelancer:", errorMsg);
       
       set({
         isLoading: false,

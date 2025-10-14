@@ -1,82 +1,52 @@
-import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { userAuthStore } from '../../store/auth/auth';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function ResetPassword() {
-  const { resetpassword } = userAuthStore();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
-  const [data, setData] = useState({ 
-    password: '',
-    confirmPassword: '' 
-  });
+  const { token } = useParams();
+  const Navigate=useNavigate();
+  const { resetPassword } = userAuthStore();
+  const [data, setData] = useState({ password: '', confirmPassword: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const getValue = (e) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
-    
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: ''
-      });
-    }
+    setData({ ...data, [name]: value });
+    if (errors[name]) setErrors({ ...errors, [name]: '' });
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!data.password) {
-      newErrors.password = 'Password is required';
-    } else if (data.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-    
-    if (!data.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (data.password !== data.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-    
+    if (!data.password) newErrors.password = 'Password is required';
+    else if (data.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+    if (!data.confirmPassword) newErrors.confirmPassword = 'Please confirm your password';
+    else if (data.password !== data.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
-    if (!token) {
-      alert("Invalid reset link. Please request a new password reset.");
-      return;
-    }
-    
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
     setIsLoading(true);
-    
+
     try {
-      const result = await resetpassword(data.password, token);
+      const result = await resetPassword(data.password,token);
       if (result?.success) {
-        alert("Password reset successfully! You can now login with your new password.");
-        setData({ 
-          password: "",
-          confirmPassword: ""
-        });
+        alert('Password reset successful! You can now log in with your new password.');
+        setData({ password: '', confirmPassword: '' });
+        Navigate('/login');
       } else {
-        alert(result?.message || "Failed to reset password. The link may have expired.");
+        alert(result?.message || 'Failed to reset password. The link may have expired.');
       }
-    } catch (error) {
-      console.log("Reset password error:", error);
-      alert("An error occurred. Please try again.");
+    } catch (err) {
+      console.error('Reset password error:', err);
+      alert('An error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
       setIsLoading(false);
@@ -149,14 +119,6 @@ export default function ResetPassword() {
             {isSubmitting ? 'Resetting Password...' : 'Reset Password'}
           </button>
         </form>
-        
-        {!token && (
-          <div className="mt-6 p-4 bg-yellow-900/30 border border-yellow-700 rounded-lg">
-            <p className="text-yellow-400 text-sm">
-              No reset token found. Please check your reset link or request a new password reset.
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

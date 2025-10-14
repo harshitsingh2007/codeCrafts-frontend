@@ -76,7 +76,22 @@ export default function Form() {
         </div>
 
         {/* Normal Signup Form */}
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (!data.email.includes("@")) {
+              alert("Email must include '@'");
+              return;
+            }
+            // Password validation: min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special char
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(data.password)) {
+              alert("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+              return;
+            }
+            handleSubmit(e);
+          }}
+        >
           <div className="flex flex-col mb-2">
             <label className="text-[16px] mb-1">Name</label>
             <input type="text" name="name" value={data.name} onChange={getValue} className="border-[1px] border-black rounded-lg py-2 px-3" required />
@@ -84,13 +99,31 @@ export default function Form() {
 
           <div className="flex flex-col mb-2">
             <label className="text-[16px] mb-1">Email</label>
-            <input type="email" name="email" value={data.email} onChange={getValue} className="border-[1px] border-black rounded-lg py-2 px-3" required />
+            <input
+              type="email"
+              name="email"
+              value={data.email}
+              onChange={getValue}
+              className="border-[1px] border-black rounded-lg py-2 px-3"
+              required
+              pattern="[^@]+@[^@]+\.[^@]+"
+              title="Email must include '@'"
+            />
           </div>
 
           <div className="flex flex-col mb-2">
             <label className="text-[16px] mb-1">Password</label>
             <div className="relative">
-              <input type={visible ? "text" : "password"} name="password" value={data.password} onChange={getValue} className="border-[1px] border-black rounded-lg py-2 px-3 w-full pr-10" required />
+              <input
+                type={visible ? "text" : "password"}
+                name="password"
+                value={data.password}
+                onChange={getValue}
+                className="border-[1px] border-black rounded-lg py-2 px-3 w-full pr-10"
+                required
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+                title="Password must be at least 8 characters and include uppercase, lowercase, number, and special character."
+              />
               <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3 top-2">
                 {visible ? <MdOutlineVisibilityOff size={20} /> : <MdOutlineVisibility size={20} />}
               </button>

@@ -5,7 +5,6 @@ import { GoDeviceCameraVideo } from "react-icons/go";
 import { FaRegComment } from "react-icons/fa6";
 import { freeLancerStore } from '../../../store/Freelancer.js/FreeLancer';
 import { CiLocationOn } from "react-icons/ci";
-import { useContactStore } from '../../../store/Contact/Contact';
 
 export default function Custom_More() {
   const {freelancers,fetchAllFreelancer}=freeLancerStore();
@@ -26,31 +25,7 @@ export default function Custom_More() {
   const [selectedTimeslot, setSelectedTimeslot] = useState("");
   const [showContact, setShowContact] = React.useState(false);
 const [contactMessage, setContactMessage] = useState("");
-const {createContact} = useContactStore();
 
-const handleContactClick = async (e) => {
-  e.preventDefault();
-  
-  if (!contactMessage.trim()) {
-    alert("Please enter a message");
-    return;
-  }
-  try {
-    const res = await createContact(contactMessage, freelancerid);
-
-    if (!res.success) {
-      alert(res.message || "Failed to send message");
-      return;
-    }
-    
-    alert(`Message sent to ${Freelancer.name}`);
-    setContactMessage("");
-    setShowContact(false);
-  } catch (error) {
-    console.log("Error in sending contact message:", error);
-    alert("An error occurred. Please try again.");
-  }
-};
 
   const handleConsultationClick = (e) => {
     e.preventDefault();
@@ -58,14 +33,14 @@ const handleContactClick = async (e) => {
       alert("Please select a time slot");
       return;
     } 
-   //logic to book consultation can be added here
+  
 
     alert(`Consultation booked for ${selectedTimeslot} with ${Freelancer.name}`);
     setSelectedTimeslot("");
     setShowConsultation(false);
   }
 
-  // Contact Modal
+
   if (showContact && Freelancer) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
@@ -82,7 +57,7 @@ const handleContactClick = async (e) => {
             <CiLocationOn size={22} />
             <span>{Freelancer.Location}</span>
           </div>
-            <form onSubmit={handleContactClick}>
+            <form >
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
             <textarea  onChange={(e)=>setContactMessage(e.target.value)}
@@ -108,7 +83,6 @@ const handleContactClick = async (e) => {
     );
   }
 
-  // Consultation Modal
   if (showConsultation && Freelancer) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">

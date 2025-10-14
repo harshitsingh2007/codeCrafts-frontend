@@ -1,81 +1,134 @@
-import React, { useEffect, useState } from 'react'
-import { templateStore } from '../../../store/data/Templatedata'
+import React, { useEffect, useState } from 'react';
+import { templateStore } from '../../../store/data/Templatedata';
 import { NavLink } from 'react-router-dom';
 import { TbAdjustmentsHorizontal } from "react-icons/tb";
 
 export default function Shop() {
-  const { templates, fetchTemplate } = templateStore();
+  const { templates, fetchTemplate, isloading } = templateStore();
   const [selectedCategory, setSelectedCategory] = useState('All');
-  
+  const [sortOption, setSortOption] = useState('');
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
   useEffect(() => {
     fetchTemplate();
-  }, [fetchTemplate])
-  
-  const categories = ['All', ...new Set(templates.map((template) => template.genre))];
-  
-  // Filter templates based on selected category
-  const filteredTemplates = selectedCategory === 'All' 
-    ? templates 
-    : templates.filter(template => template.genre === selectedCategory);
+  }, [fetchTemplate]);
+
+  const categories = ['All', ...new Set(templates.map((t) => t.genre))];
+
+  // Step 1️⃣: Filter by Category
+  let filteredTemplates =
+    selectedCategory === 'All'
+      ? [...templates]
+      : templates.filter((t) => t.genre === selectedCategory);
+
+  // Step 2️⃣: Sort by Selected Option
+  if (sortOption === 'priceLowHigh') {
+    filteredTemplates.sort((a, b) => a.Price - b.Price);
+  } else if (sortOption === 'priceHighLow') {
+    filteredTemplates.sort((a, b) => b.Price - a.Price);
+  } else if (sortOption === 'az') {
+    filteredTemplates.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sortOption === 'za') {
+    filteredTemplates.sort((a, b) => b.title.localeCompare(a.title));
+  }
 
   return (
-    <div className='pt-28 bg-black text-white pl-[3em] pr-[3em]'>
-
-      <div className='flex justify-center items-center mb-10'>
-        <div className='text-center flex gap-8 justify-center w-[90%]'>
+    <div className="pt-28 bg-black text-white px-6 sm:px-12 min-h-screen">
+      {/* Filter Section */}
+      <div className="flex flex-wrap justify-between items-center mb-10">
+        {/* Categories */}
+        <div className="flex flex-wrap gap-3 justify-center">
           {categories.map((category, index) => (
-            <NavLink 
+            <button
               key={index}
-              to={`?category=${category}`}
-              className={({ isActive }) => `no-underline ${isActive ? "text-white" : "text-gray-400"}`}
               onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-2 rounded-full text-sm sm:text-base transition ${
+                selectedCategory === category
+                  ? 'bg-white text-black font-semibold'
+                  : 'bg-gray-800 hover:bg-gray-700'
+              }`}
             >
               {category}
-            </NavLink>
+            </button>
           ))}
         </div>
-        <div className='w-[5%] flex justify-center text-center text-xl gap-2 cursor-pointer'>
-          <TbAdjustmentsHorizontal /><p className='text-sm'>Price</p>
+
+        {/* Sort Button */}
+        <div className="relative mt-4 sm:mt-0">
+          <button
+            onClick={() => setIsSortOpen(!isSortOpen)}
+            className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-full hover:bg-gray-700 transition"
+          >
+            <TbAdjustmentsHorizontal className="text-xl" />
+            <span className="text-sm">Sort</span>
+          </button>
+
+          {isSortOpen && (
+            <div className="absolute right-0 mt-2 bg-gray-900 border border-gray-700 rounded-lg shadow-lg w-48 z-10">
+              <button
+                onClick={() => { setSortOption('priceLowHigh'); setIsSortOpen(false); }}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+              >
+                Price: Low → High
+              </button>
+              <button
+                onClick={() => { setSortOption('priceHighLow'); setIsSortOpen(false); }}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+              >
+                Price: High → Low
+              </button>
+              <button
+                onClick={() => { setSortOption('az'); setIsSortOpen(false); }}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+              >
+                A → Z
+              </button>
+              <button
+                onClick={() => { setSortOption('za'); setIsSortOpen(false); }}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+              >
+                Z → A
+              </button>
+              <button
+                onClick={() => { setSortOption(''); setIsSortOpen(false); }}
+                className="block w-full text-left px-4 py-2 text-gray-400 hover:bg-gray-700"
+              >
+                Reset Sort
+              </button>
+            </div>
+          )}
         </div>
-      </div>
-      
-      {/* Show filtered templates */}
-      <div className='sm:block sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4'>
-        {filteredTemplates.map((template,index) => (
-          <div key={index} className='mb-3 sm:mb-4 break-inside-avoid relative cursor-pointer'>
-            <NavLink to={`/shop-more/${template._id}`}>
-            <img src={template.image} alt=""  className='rounded-lg'/>
-            </NavLink>
-            <p className='absolute bottom-1 left-3 bg-black py-1 px-2 rounded-lg'>${template.Price}</p>
-          </div>
-        ))}
       </div>
 
-      {/* Show templates by category */}
-      {selectedCategory === 'All' && (
-        <div>
-          {categories.filter(cat => cat !== 'All').map((category, index) => (
-            <div key={index} className='mb-12'>
-              <h2 className='text-2xl font-bold mb-6 capitalize'>{category}</h2>
-              <div className='sm:block sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4'>
-                {templates
-                  .filter(template => template.genre === category)
-                  .map((template, templateIndex) => (
-                    <div key={templateIndex} className='mb-3 sm:mb-4 break-inside-avoid relative cursor-pointer'>
-                      <NavLink to={`/shop-more/${template._id}`}>
-                      <img src={template.image} alt={template.title} className='rounded-lg'/>
-                      </NavLink>
-                      <p className='absolute bottom-1 left-3 bg-black py-1 px-2 rounded-lg'>${template.Price}</p>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
-          ))}
+      {/* Template Grid */}
+      {isloading ? (
+        <p className="text-center text-gray-400">Loading templates...</p>
+      ) : (
+        <div className="grid grid-cols-1 py-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredTemplates.length > 0 ? (
+            filteredTemplates.map((template) => (
+              <NavLink
+                to={`/shop-more/${template._id}`}
+                key={template._id}
+                className="relative group cursor-pointer"
+              >
+                <img
+                  src={template.image}
+                  alt={template.title}
+                  className="w-full h-[250px] object-cover rounded-xl border border-gray-700 transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute bottom-2 left-2 bg-black/70 px-3 py-1 rounded-lg text-sm">
+                  ${template.Price}
+                </div>
+              </NavLink>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 col-span-full">
+              No templates found.
+            </p>
+          )}
         </div>
       )}
-      
-      <div className='pb-16'></div>
     </div>
-  )
+  );
 }

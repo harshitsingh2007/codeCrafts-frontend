@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
@@ -6,12 +5,11 @@ import { RiLoader2Fill } from "react-icons/ri";
 import { userAuthStore } from '../../store/auth/auth.js'
 export default function FormLogin() {
         const Navigate = useNavigate()
-        const { isLoading, login,setuserId } = userAuthStore()
+        const { isLoading, login} = userAuthStore()
         const [data, setdata] = useState({
                 email: "",
                 password: "",
         })
-
         const getValue = (e) => {
                 const { name, value } = e.target;
                 setdata({
@@ -55,7 +53,10 @@ export default function FormLogin() {
                                         <div className='flex flex-col gap-3'>
                                                 <div className='flex flex-col gap-2'>
                                                         <label htmlFor="">Email</label>
-                                                        <input type="email" name='email' onChange={getValue} placeholder='Enter your email' required className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md text-sm sm:text-base' />
+                                                        <input type="email" name='email' onChange={getValue} placeholder='Enter your email' required
+                                                        pattern="[^@]+@[^@]+\.[^@]+"
+                                                         title="Email must include '@'"
+                                                         className='py-2 border-[1px] border-black rounded-lg px-2 shadow-md text-sm sm:text-base' />
                                                 </div>
                                                 <div className='flex flex-col gap-2'>
                                                         <label htmlFor="">Password</label>

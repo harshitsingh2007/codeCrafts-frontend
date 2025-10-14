@@ -2,17 +2,54 @@ import React, { useState, useEffect } from 'react';
 import { GoArrowUpRight } from "react-icons/go";
 import { templateStore } from '../../../store/data/Templatedata';
 import { motion, AnimatePresence } from 'framer-motion';
-import { freeLancerStore } from '../../../store/Freelancer.js/FreeLancer';
+import { freeLancerStore } from '../../../store/Freelancer.js/FreeLancer'
 import { userAuthStore } from '../../../store/auth/auth';
+import { useNavigate } from 'react-router-dom';
+import useCartStore from '../../../store/Cart/Cart';
 
 export default function AdminPane() {
-  const { templates, fetchTemplate, addTemplate } = templateStore();
-  const { createFreelancer } = freeLancerStore();
+  const user = userAuthStore((state) => state.user);
+  const Navigate=useNavigate();
+  const {fetchTemplate, addTemplate,OwnerTemplate,getOwnerTemplate,removeOwnerTemplate} = templateStore();
+  const { getMyEarning,totalEarning } = useCartStore()
+  const {createFreelancer } = freeLancerStore();
   const [templateModalVisible, setTemplateModalVisible] = useState(false);
   const [freelancerModalVisible, setFreelancerModalVisible] = useState(false);
-  const {user,logout}=userAuthStore();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const logout = userAuthStore((state) => state.logout);
+
+ useEffect(() => {
+    getMyEarning();
+  }, []);
+
+const handledeleteTemplate = async (templateId) => {
+  if (!window.confirm("Are you sure you want to delete this template?")) return;
+
+  try {
+    const res = await removeOwnerTemplate(templateId);
+
+    if (res?.success) {
+      alert("Template deleted successfully");
+    } else {
+      alert(`Failed to delete template: ${res?.message || "Unknown error"}`);
+    }
+  } catch (error) {
+    console.error("Error deleting template:", error);
+    alert("An error occurred while deleting the template.");
+  }
+};
+
+ 
+  const handleLogout=async()=>{
+    try {
+      await logout();
+       console.log("Logged out successfully");
+        Navigate('/login');
+    } catch (error) {
+      console.log(error.message, "logout error");
+    }
+  }
 
   const [template, setTemplate] = useState({
     title: "",
@@ -41,9 +78,12 @@ export default function AdminPane() {
 
   useEffect(() => {
     fetchTemplate();
-  }, [fetchTemplate]);
+  },[fetchTemplate]);
 
- 
+  useEffect(()=>{
+    getOwnerTemplate();
+  },[getOwnerTemplate]);
+  
   const uploadToCloudinary = async (file, type = 'template') => {
     setUploading(true);
     setUploadProgress(0);
@@ -293,42 +333,70 @@ export default function AdminPane() {
           <p className='text-sm md:text-base text-gray-400'>View and manage all your websites in one place.</p>
         </div>
         <div className='flex flex-wrap gap-2 md:gap-4 justify-center'>
-          <button
-            className='bg-white text-black py-2 pr-2 pl-4 rounded-full flex items-center gap-1 text-sm md:text-base'
-            onClick={() => setTemplateModalVisible(true)}
-          >
-            Create new Template
-            <span className='bg-black p-2 rounded-full flex items-center justify-center'>
-              <GoArrowUpRight className='text-white' size={20} />
-            </span>
-          </button>
-          <button className='bg-white text-black py-2 pr-2 pl-4 rounded-full flex items-center gap-1 text-sm md:text-base'>
-            Create Website
-            <span className='bg-black p-2 rounded-full flex items-center justify-center'>
-              <GoArrowUpRight className='text-white' size={20} />
-            </span>
-          </button>     
-          <button
-            className="bg-white text-black py-2 pr-2 pl-4 rounded-full flex items-center gap-1 text-sm md:text-base"
-            onClick={() => setFreelancerModalVisible(true)}
-          >
-            Become Freelancer
-            <span className="bg-black p-2 rounded-full flex items-center justify-center">
-              <GoArrowUpRight className="text-white" size={20} />
-            </span>
-          </button>
-        </div>
-      </div>
-      <div className='flex flex-col gap-4 mb-8'>
-        <div className='bg-gray-800 p-4 rounded-lg'>
-          <h2 className='text-lg md:text-xl font-semibold'>Your Templates</h2>
-        </div>
-        <div className='bg-gray-800 p-4 rounded-lg'>
-          <h2 className='text-lg md:text-xl font-semibold'>Websites</h2>
-        </div>
-      </div>
+  <button
+    className='bg-white text-black py-2 pr-2 pl-4 rounded-full flex items-center gap-1 text-sm md:text-base'
+    onClick={() => setTemplateModalVisible(true)}
+  >
+    Create new Template
+    <span className='bg-black p-2 rounded-full flex items-center justify-center'>
+      <GoArrowUpRight className='text-white' size={20} />
+    </span>
+  </button>    
 
-      {/* Template Modal */}
+{/* Show "Become Freelancer" only if user is not a freelancer */}
+  {!user?.isFreelancer && (
+    <button
+      className="bg-gradient-to-r from-blue-500 to-green-400 text-white py-2 pr-2 pl-4 rounded-full flex items-center gap-2 shadow-lg hover:from-blue-600 hover:to-green-500 transition-all duration-200 text-sm md:text-base font-semibold"
+      onClick={() => setFreelancerModalVisible(true)}
+    >
+      <span>Become Freelancer</span>
+      <span className="bg-black p-2 rounded-full flex items-center justify-center shadow">
+        <GoArrowUpRight className="text-white" size={20} />
+      </span>
+    </button>
+  )}
+  </div>
+  </div>
+  <div className="flex flex-col md:flex-row gap-6 mb-8">
+    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl flex-1 flex flex-col items-center shadow-lg">
+      <h1 className="text-lg md:text-xl font-semibold mb-2">Total Earning</h1>
+      <p className="text-3xl font-bold text-green-400">${totalEarning}</p>
+    </div>
+  </div>
+  <div className='flex flex-col gap-6 mb-8'>
+    <div className='bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-lg'>
+      <h2 className='text-lg md:text-xl font-semibold mb-4'>Your Templates</h2>
+      <div>
+        {OwnerTemplate.length === 0 ? (
+          <p className='text-gray-400 mt-2'>No templates found. Click "Create new Template" to add one.</p>
+        ) : (
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4'>
+            {OwnerTemplate.map((temp) => (
+              <div key={temp._id} className='bg-gray-700 p-4 rounded-lg flex flex-col shadow hover:shadow-xl transition-shadow duration-200'>
+                <img src={temp.image} alt={temp.title} className='w-full h-32 object-cover rounded-md mb-3 border border-gray-600' />
+                <h3 className='text-md font-semibold mb-1'>{temp.title}</h3>
+                <p className='text-sm text-gray-300 mb-1 line-clamp-2'>{temp.description}</p>
+                <div className="flex justify-between items-center mt-auto">
+                  <span className='text-xs text-gray-400'>Category: <span className="font-medium">{temp.genre}</span></span>
+                  <span className='text-xs text-gray-400'>Price: <span className="font-medium text-green-400">${temp.Price}</span></span>
+                </div>
+                <button
+                  className='bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded mt-3 transition'
+                  onClick={() => handledeleteTemplate(temp._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+    <div className='bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-lg'>
+      <h2 className='text-lg md:text-xl font-semibold mb-2'>Your Booking</h2>
+      <div className="text-gray-400">No bookings yet.</div>
+    </div>
+  </div>
       <AnimatePresence>
         {templateModalVisible && (
           <motion.div
@@ -457,15 +525,18 @@ export default function AdminPane() {
               className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center mb-6">
+              {
+                
+                <div className="flex justify-between items-center mb-6">
                 <h2 className='text-xl md:text-2xl font-bold'>Become a Freelancer</h2>
                 <button
                   onClick={() => setFreelancerModalVisible(false)}
                   className="text-gray-400 hover:text-white text-xl"
-                >
+                  >
                   ✕
                 </button>
               </div>
+              }
 
               <form onSubmit={handleFreelancerSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -665,7 +736,7 @@ export default function AdminPane() {
       </AnimatePresence>
       
       <div>
-        <button className='bg-red-600 rounded px-4 py-2' onClick={logout}>Logout</button>
+        <button className='bg-red-600 rounded px-4 py-2' onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );
